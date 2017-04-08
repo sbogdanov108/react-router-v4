@@ -1,12 +1,13 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom';
 
 import './App.css';
 
 const Links = () => (
   <nav>
-    <Link to='/?id=123'>Inline</Link>
-    <Link to={{pathname: '/', search: 'id=456'}}>Object</Link>
+    <Link to='/'>Home</Link>
+    <Link to='/about'>About</Link>
+    <Link to='/contact/xx/zzz/xxxx'>Contact</Link>
   </nav>
 );
 
@@ -15,15 +16,11 @@ const App = (props) => (
     <div>
       <Links />
 
-      {/* route props destruction */}
-      <Route path='/' render={({match, location}) => (
-        <div>
-          <p>root</p>
-          <b>match:</b> <pre>{JSON.stringify(match, null, 2)}</pre>
-          <b>location:</b> <pre>{JSON.stringify(location, null, 2)}</pre>
-          <b>location.search:</b> <p>{new URLSearchParams(location.search).get('id')}</p>
-        </div>
-      )}/>
+      <Switch>
+        <Route exact path='/' render={() => <h1>Home</h1>}/>
+        <Route path='/about' render={() => <h1>About</h1>}/>
+        <Route render={() => <h1>Page not found</h1>}/>
+      </Switch>
     </div>
   </Router>
 );
