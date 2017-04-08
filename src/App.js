@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import './App.css';
 
@@ -7,20 +7,33 @@ const Links = () => (
   <nav>
     <Link to='/'>Home</Link>
     <Link to='/about'>About</Link>
-    <Link to='/contact/xx/zzz/xxxx'>Contact</Link>
   </nav>
+);
+
+// props destruction
+const Header = ({match}) => (
+  <div className="header">
+    {/* route props destruction */}
+    <Route path='/:page' render={({match}) => (
+      <h1>{match.params.page} header</h1>
+    )}/>
+  </div>
+);
+
+const Content = ({match}) => (
+  <div className="content">
+    <Route path='/:page' render={({match}) => (
+      <p>{match.params.page} content</p>
+    )}/>
+  </div>
 );
 
 const App = (props) => (
   <Router>
     <div>
       <Links />
-
-      <Switch>
-        <Route exact path='/' render={() => <h1>Home</h1>}/>
-        <Route path='/about' render={() => <h1>About</h1>}/>
-        <Route render={() => <h1>Page not found</h1>}/>
-      </Switch>
+      <Header/>
+      <Content/>
     </div>
   </Router>
 );
